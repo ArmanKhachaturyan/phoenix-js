@@ -23,7 +23,7 @@ const buttonsData = {
     '00': { label: '00', action: appendToInput },
     '0': { label: '0', action: appendToInput },
     '.': { label: '.', action: appendToInput },
-    '=': { label: '=', action: evaluateResult }
+    '=': { label: '=', action: expressInNumbers }
 };
 
 for (let key in buttonsData) {
@@ -69,14 +69,37 @@ function appendToInput(event) {
     input.value = string;
 }
 
-// Function to evaluate the input expression
-function evaluateResult() {
+// Function to express in numbers the input 
+
+function expressInNumbers() {
     try {
-        string = eval(string);
-        input.value = string;
+        let result = evaluateExpression(string);
+        input.value = result;
         input.style.color = "#fb7c14";
     } catch (error) {
         input.value = "Error";
         input.style.color = "red";
+    }
+}
+
+function evaluateExpression(expression) {
+    let tikens = expression.match(/\d+|\+|\-|\*|\/|\%|\./)
+    if (!tokens) throw "Invalid expression";
+
+
+    let arrNumber = [];
+    let operators = { '+': true, '-': true, '*': true, '/': true, '%': true };
+    for (let token of tikens) {
+        if (operators[token]) {
+            let b = arrNumber.pop();
+            let a = arrNumber.pop();
+            if (token === '+') arrNumber.push(a + b);
+            else if (token === '-') arrNumber.push(a - b);
+            else if (token === '*') arrNumber.push(a * b);
+            else if (token === '/') arrNumber.push(a / b);
+            else if (token === '%') arrNumber.push(a % b);
+        } else {
+            arrNumber.push(parseFloat(token));
+        }
     }
 }
