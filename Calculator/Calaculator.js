@@ -1,8 +1,14 @@
 let input = document.getElementById('input');
 let container = document.querySelector('.calculator');
-
 let string = "";
 
+const operators = {
+    '+': (a, b) => a + b,
+    '-': (a, b) => a - b,
+    '*': (a, b) => a * b,
+    '/': (a, b) => a / b,
+    '%': (a, b) => a % b
+};
 const buttonsData = {
     'AC': { label: 'AC', action: clearInput },
     'DEL': { label: 'DEL', action: deleteLast },
@@ -26,14 +32,13 @@ const buttonsData = {
     '=': { label: '=', action: expressInNumbers }
 };
 
+let div; // Variable to keep track of div elements
+
 for (let key in buttonsData) {
-
-
     let buttonElement = document.createElement('button'); // Create button element
     buttonElement.textContent = buttonsData[key].label; // Set button label
     buttonElement.classList.add('button'); // Add button class
     if (key == '/' || key === '*' || key === '-' || key === '+' || key === '%') {
-
         buttonElement.classList.add('operator');
     } else if (key === '=') {
         buttonElement.classList.add('equalBtn');
@@ -47,9 +52,7 @@ for (let key in buttonsData) {
     }
     buttonElement.onclick = buttonsData[key].action; // Add onclick event if action exists
     div.appendChild(buttonElement); // Append button to container
-
 }
-
 
 // Function to clear the input
 function clearInput() {
@@ -70,7 +73,6 @@ function appendToInput(event) {
 }
 
 // Function to express in numbers the input 
-
 function expressInNumbers() {
     try {
         let result = evaluateExpression(string);
@@ -82,24 +84,46 @@ function expressInNumbers() {
     }
 }
 
+// function evaluateExpression(expression) {
+//     let tokens = expression.match(/\d+|\+|\-|\*|\/|\%|\./);
+//     if (!tokens) throw "Invalid expression";
+
+//     let arrNumber = [];
+//     for (let token of tokens) {
+//         if (operators[token]) {
+//             let b = arrNumber.pop();
+//             let a = arrNumber.pop();
+//             if (token === '/') {
+//                 if (b === 0) throw "Division by zero error";
+//             }
+//             arrNumber.push(operators[token](a, b));
+//         } else {
+//             arrNumber.push(parseFloat(token));
+//         }
+//     }
+//     return arrNumber[0];
+// }
+
 function evaluateExpression(expression) {
-    let tikens = expression.match(/\d+|\+|\-|\*|\/|\%|\./)
+    let tokens = expression.match(/\d+(\.\d+)?|[\+\-\*\/\%]/g);
     if (!tokens) throw "Invalid expression";
 
-
     let arrNumber = [];
-    let operators = { '+': true, '-': true, '*': true, '/': true, '%': true };
-    for (let token of tikens) {
+    let currentOperator = null;
+    for (let token of tokens) {
         if (operators[token]) {
-            let b = arrNumber.pop();
-            let a = arrNumber.pop();
-            if (token === '+') arrNumber.push(a + b);
-            else if (token === '-') arrNumber.push(a - b);
-            else if (token === '*') arrNumber.push(a * b);
-            else if (token === '/') arrNumber.push(a / b);
-            else if (token === '%') arrNumber.push(a % b);
+            currentOperator = token;
         } else {
-            arrNumber.push(parseFloat(token));
+            let num = parseFloat(token);
+            if (isNaN(num)) throw "Invalid number";
+            if (currentOperator) {
+                let prevNum = arrNumber.pop();
+                arrNumber.push(operators[currentOperator](prevNum, num));
+                currentOperator = null;
+            } else {
+                arrNumber.push(num);
+            }
         }
     }
+    return arrNumber[0];
 }
