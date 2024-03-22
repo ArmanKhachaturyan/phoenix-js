@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Java The Complete Reference, Eleventh Edition",
+    "author": "Herbert Schildt",
+    "status": true
+  },
+  {
+    "id": 2,
+    "title": "Essential Math for Data Science",
+    "author": "Thomas Nield",
+    "status": true
+  },
+  {
+    "id": 3,
+    "title": "C++ Software Design",
+    "author": "Klaus Iglberger",
+    "status": true
+  },
+  {
+    "id": 4,
+    "title": "System Design Interview",
+    "author": "Alex Xu",
+    "status": true
+  },
+  {
+    "id": 5,
+    "title": "Distributed Systems with Node.js",
+    "author": "Thomas Hunter",
+    "status": true
+  }
+]

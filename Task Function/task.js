@@ -1,8 +1,8 @@
 // Given an array of objects, group them by a specific property. For instance, given an array of people objects, group them by ‘age’.
-function  groupByProperty(arr,valu){
+function  groupByProperty(arr,value){
     const  group ={}
     for(const obj of arr){
-        const key = obj[valu];
+        const key = obj[value];
         if(!group[key]){
             group[key] =[];
         }
@@ -12,7 +12,8 @@ function  groupByProperty(arr,valu){
 }
 
 const people = [
-    { name: "Alice", age: 30 },
+    { 
+        : "Alice", age: 30 },
     { name: "Bob", age: 25 },
     { name: "Charlie", age: 30 }
   ];

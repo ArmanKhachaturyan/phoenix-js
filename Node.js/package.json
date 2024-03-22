@@ -1,0 +1,25 @@
+{
+  "name": "phoenix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArmanKhachaturyan/phoenix-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArmanKhachaturyan/phoenix-js/issues"
+  },
+  "homepage": "https://github.com/ArmanKhachaturyan/phoenix-js#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.1",
+    "phat": "^1.0.0"
+  }
+}
