@@ -1,10 +1,8 @@
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
 const fs = require("fs");
 
-app.use(bodyParser.json());
-const PORT = 5000;
+const PORT = 8000;
 
 app.use(express.json());
 
@@ -17,6 +15,26 @@ function readBooksFromFile() {
     return [];
   }
 }
+
+function writeBooksFromFile() {
+  try {
+    fs.writeFile(
+      "books.json",
+      JSON.stringify(books, null, 2),
+      "utf-8",
+      (err) => {
+        if (err) {
+          console.log("Error writhing books data to file:", err);
+        } else {
+          console.log("Books data has been successfully written to file");
+        }
+      }
+    );
+  } catch (error) {
+    console.error("Error writing books data to file:", error);
+  }
+}
+
 let books = readBooksFromFile();
 
 let newid = books.length;
@@ -39,7 +57,7 @@ app.post("/books", (req, res) => {
   const { title, author, status } = req.body;
   const newBook = { id: newid++, title, author, status };
   books.push(newBook);
-  res.status(201).json(newBook);
+  writeBooksFromFile(), res.status(201).json(newBook);
 });
 
 app.put("/books/:id", (req, res) => {
