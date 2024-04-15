@@ -20,6 +20,7 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "express": "^4.19.1",
-    "phat": "^1.0.0"
+    "phat": "^1.0.0",
+    "y": "^0.3.2"
   }
 }
